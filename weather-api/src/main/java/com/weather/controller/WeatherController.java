@@ -15,14 +15,13 @@ public class WeatherController {
     @Autowired
     private WeatherRepository repository;
 
-    // GET ALL + FILTER + SORT
     @GetMapping
     public List<Weather> getWeather(
             @RequestParam(required = false) String condition,
             @RequestParam(required = false) String sort
     ) {
 
-        // FILTER + SORT
+
         if (condition != null && sort != null) {
             return repository.findAll(
                             Sort.by(sort)
@@ -31,17 +30,17 @@ public class WeatherController {
                     .toList();
         }
 
-        // ONLY FILTER
+
         if (condition != null) {
             return repository.findByCondition(condition);
         }
 
-        // ONLY SORT
+
         if (sort != null) {
             return repository.findAll(Sort.by(sort));
         }
 
-        // DEFAULT → RETURN ALL
+
         return repository.findAll();
     }
 }
